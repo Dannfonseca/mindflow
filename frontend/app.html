@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&family=Work+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <title>MindFlow App</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body class="font-size-medium">
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="flex items-center gap-4 text-white">
+                    <div class="size-4">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-bold">MindFlow</h2>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-target="view-dashboard">Dashboard</a>
+                <a href="#" class="sidebar-link" data-target="view-mindmap">Mapa Mental</a>
+                <a href="#" class="sidebar-link hidden" id="admin-link" data-target="view-admin-users">Administração</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="user-menu-container">
+                    <div id="profile-menu-button" class="profile-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div id="profile-dropdown" class="profile-dropdown">
+                        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                            <p class="text-sm font-semibold text-gray-900 dark:text-white" id="dropdown-user-name">Carregando...</p>
+                            <p class="text-sm text-gray-500 truncate dark:text-gray-400" id="dropdown-user-email">...</p>
+                        </div>
+                        <a href="#" class="dropdown-link" data-target="view-settings">Configurações</a>
+                        <a href="Login.html" id="logout-button" class="dropdown-link">Sair</a>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="main-view-area">
+                <div id="view-dashboard" class="app-view active">
+                    <div class="p-8">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-6">Seus Mapas Mentais</h1>
+                        <div id="dashboard-maps-container" class="maps-grid">
+                            </div>
+                    </div>
+                </div>
+
+                <div id="view-mindmap" class="app-view">
+                    <div class="p-4 border-b border-solid border-b-[#e9edf1]">
+                        <nav id="breadcrumb" aria-label="breadcrumb">
+                            <ol class="flex items-center text-xl font-bold text-gray-800">
+                                <li>
+                                    <a href="#" id="breadcrumb-dashboard-link" class="font-semibold text-gray-600 hover:text-blue-600">Dashboard</a>
+                                </li>
+                                <li>
+                                    <span class="mx-2 text-gray-400">/</span>
+                                </li>
+                                <li id="breadcrumb-map-title" class="text-gray-800 cursor-pointer hover:bg-gray-100 rounded-md p-1" title="Clique para editar o título">
+                                    Novo Mapa Mental
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="flex justify-between items-center px-10 py-3 bg-gray-50">
+                        <button id="add-node-btn" class="p-2 text-[#101419] bg-gray-100 rounded-lg hover:bg-gray-200" title="Adicionar novo card">
+                        <div class="text-[#101419]" data-icon="Plus" data-size="24px" data-weight="regular">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+                            </svg>
+                        </div>
+                        </button>
+                        <button id="save-map-btn" class="flex items-center justify-center rounded-full h-10 bg-[#d2e2f3] text-[#101419] gap-2 text-sm font-bold leading-normal tracking-[0.015em] px-4" title="Salvar mapa mental">
+                            <span class="truncate">Salvar</span>
+                        </button>
+                    </div>
+                    <div id="mindmap-canvas" class="flex-grow">
+                        <svg id="svg-canvas"></svg>
+                    </div>
+                </div>
+
+                <div id="view-settings" class="app-view">
+                    <div class="p-8 max-w-3xl mx-auto w-full">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-10">Configurações</h1>
+                        
+                        <div class="settings-section">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">Geral</h2>
+                            <div class="setting-item">
+                                <label for="theme-toggle" class="setting-label">Modo Escuro</label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="theme-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="setting-label">Tamanho da Fonte</label>
+                                <div id="font-size-options" class="font-size-options">
+                                    <button class="font-size-btn active" data-size="medium">Médio</button>
+                                    <button class="font-size-btn" data-size="large">Grande</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h2 class="text-xl font-bold text-gray-800 mt-8 mb-4">Segurança</h2>
+                            <form id="change-password-form" class="space-y-4">
+                                <label class="flex flex-col">
+                                    <p class="form-label">Senha Atual</p>
+                                    <input id="currentPassword" type="password" required class="form-input-settings" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <p class="form-label">Nova Senha</p>
+                                    <input id="newPassword" type="password" required class="form-input-settings" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <p class="form-label">Confirmar Nova Senha</p>
+                                    <input id="confirmNewPassword" type="password" required class="form-input-settings" />
+                                </label>
+                                <div class="pt-2">
+                                    <button type="submit" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-11 px-5 bg-[#d2e2f3] text-[#101419] text-base font-bold leading-normal tracking-[0.015em]">
+                                        <span>Alterar Senha</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="view-admin-users" class="app-view">
+                    <div class="p-8 w-full">
+                        <div class="flex justify-between items-center mb-6">
+                            <h1 class="text-3xl font-bold text-gray-800">Gerenciamento de Usuários</h1>
+                            <div class="flex items-center gap-4">
+                                <input type="text" id="admin-user-search" placeholder="Pesquisar por nome, email ou usuário..." class="form-input-settings w-80">
+                                <button id="admin-create-user-btn" class="flex items-center justify-center rounded-full h-11 px-5 bg-[#d2e2f3] text-[#101419] text-base font-bold leading-normal tracking-[0.015em]">
+                                    Criar Novo Usuário
+                                </button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto bg-white rounded-lg shadow">
+                            <table class="min-w-full">
+                                <thead class="bg-gray-50 border-b-2 border-gray-200">
+                                    <tr>
+                                        <th class="p-3 text-sm font-semibold tracking-wide text-left">Nome</th>
+                                        <th class="p-3 text-sm font-semibold tracking-wide text-left">Usuário</th>
+                                        <th class="p-3 text-sm font-semibold tracking-wide text-left">Email</th>
+                                        <th class="p-3 text-sm font-semibold tracking-wide text-left">Role</th>
+                                        <th class="p-3 text-sm font-semibold tracking-wide text-left">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-users-table-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <div id="topic-context-menu" class="context-menu">
+        <button data-action="audio" class="context-menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            Gravar Áudio
+        </button>
+        <button data-action="flashcard" class="context-menu-btn">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Criar Flashcard
+        </button>
+        <button data-action="cloud" class="context-menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+            Nuvem de Palavras
+        </button>
+        <button data-action="quiz" class="context-menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            Trilha de Questões
+        </button>
+    </div>
+
+    <div id="edit-user-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-4">Editar Usuário</h2>
+            <form id="edit-user-form">
+                <input type="hidden" id="edit-userId">
+                <label class="flex flex-col mb-4">
+                    <span class="form-label">Nome</span>
+                    <input type="text" id="edit-firstName" class="form-input-settings">
+                </label>
+                <label class="flex flex-col mb-4">
+                    <span class="form-label">Sobrenome</span>
+                    <input type="text" id="edit-lastName" class="form-input-settings">
+                </label>
+                <label class="flex flex-col mb-4">
+                    <span class="form-label">Usuário</span>
+                    <input type="text" id="edit-username" maxlength="20" class="form-input-settings">
+                </label>
+                <label class="flex flex-col mb-4">
+                    <span class="form-label">Email</span>
+                    <input type="email" id="edit-email" class="form-input-settings">
+                </label>
+                <label class="flex flex-col mb-4">
+                    <span class="form-label">Role</span>
+                    <select id="edit-role" class="form-input-settings">
+                        <option value="user">User</option>
+                        <option value="premium">Premium</option>
+                        <option value="subadmin">Sub-Admin</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </label>
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" id="edit-user-cancel" class="modal-button-secondary">Cancelar</button>
+                    <button type="submit" class="modal-button-primary">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="create-user-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-4">Criar Novo Usuário</h2>
+            <form id="create-user-form" class="space-y-3">
+                 <div class="flex gap-4">
+                    <label class="flex flex-col flex-1">
+                        <span class="form-label">Nome</span>
+                        <input id="create-firstName" type="text" required placeholder="Nome do usuário" class="form-input-settings" />
+                    </label>
+                    <label class="flex flex-col flex-1">
+                        <span class="form-label">Sobrenome</span>
+                        <input id="create-lastName" type="text" required placeholder="Sobrenome" class="form-input-settings" />
+                    </label>
+                </div>
+
+                <label class="flex flex-col">
+                    <span class="form-label">Usuário</span>
+                    <input id="create-username" type="text" required placeholder="Crie um nome de usuário" maxlength="20" class="form-input-settings" />
+                </label>
+
+                <label class="flex flex-col">
+                    <span class="form-label">Data de Nascimento</span>
+                    <input id="create-birthDate" type="date" required class="form-input-settings" />
+                </label>
+
+                <label class="flex flex-col">
+                    <span class="form-label">Email</span>
+                    <input id="create-email" type="email" required placeholder="email@exemplo.com" class="form-input-settings" />
+                </label>
+                
+                <label class="flex flex-col">
+                    <span class="form-label">Senha</span>
+                    <input id="create-password" type="password" required placeholder="Crie uma senha" class="form-input-settings" />
+                </label>
+                
+                <label class="flex flex-col">
+                    <span class="form-label">Role</span>
+                    <select id="create-role" class="form-input-settings" required>
+                        <option value="user" selected>User</option>
+                        <option value="premium">Premium</option>
+                        <option value="subadmin">Sub-Admin</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </label>
+
+                <div class="flex justify-end gap-4 pt-4">
+                    <button type="button" id="create-user-cancel" class="modal-button-secondary">Cancelar</button>
+                    <button type="submit" class="modal-button-primary">Criar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="js/app.js" defer></script>
+  </body>
+</html>

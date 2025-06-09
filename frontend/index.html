@@ -1,0 +1,45 @@
+<!-- Arquivo: index.html (Página Inicial) -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&family=Work+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <title>Bem-vindo ao MindFlow</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-gray-50 group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e9edf1] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#101419]">
+            <div class="size-4">
+               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
+              </svg>
+            </div>
+            <h2 class="text-[#101419] text-lg font-bold leading-tight tracking-[-0.015em]">MindFlow</h2>
+          </div>
+          <nav class="flex items-center gap-6">
+            <a href="Login.html" class="text-sm font-medium text-gray-700 hover:text-blue-600">Login</a>
+            <a href="signup.html" class="text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full">Cadastre-se</a>
+          </nav>
+        </header>
+        <main class="flex-grow flex items-center justify-center text-center">
+            <div class="hero-section">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4">Organize Suas Ideias Sem Limites.</h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">MindFlow é uma ferramenta de mapa mental, projetada para ajudar você a visualizar, conectar e expandir seus pensamentos de forma intuitiva e sem restrições de espaço.</p>
+                <a href="signup.html" class="text-lg font-bold text-white bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-full">Comece a usar gratuitamente</a>
+            </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
