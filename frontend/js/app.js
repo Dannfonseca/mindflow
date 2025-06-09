@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const API_URL = 'https://mindflow-w7l2.onrender.com';
+    const API_URL = 'https://mindflow-w7l2.onrender.com/api';
     const body = document.body;
     const appViews = document.querySelectorAll('.app-view');
     const sidebarLinks = document.querySelectorAll('.sidebar-link');
