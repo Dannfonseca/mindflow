@@ -1,5 +1,5 @@
 // Arquivo: server.js
-// Descrição: Adicionada configuração de CORS explícita para o ambiente de produção.
+// Descrição: Adicionadas as novas rotas de admin e seus middlewares de proteção.
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -11,9 +11,11 @@ import adminRoutes from './routes/admin.js';
 import authMiddleware from './middleware/authMiddleware.js';
 import adminMiddleware from './middleware/adminMiddleware.js';
 
+// Configuração inicial
 dotenv.config();
 const app = express();
 
+// Conectar ao Banco de Dados
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
@@ -25,18 +27,14 @@ const connectDB = async () => {
 };
 connectDB();
 
-// --- CONFIGURAÇÃO DE CORS ATUALIZADA ---
-// Define a URL do frontend que tem permissão para acessar esta API.
-const corsOptions = {
-  origin: 'https://mindflow-site.onrender.com'
-};
-app.use(cors(corsOptions));
-// --- FIM DA CONFIGURAÇÃO DE CORS ---
-
+// Middlewares
+app.use(cors());
 app.use(express.json());
 
+// Rota de Teste
 app.get('/', (req, res) => res.send('API do MindFlow está rodando!'));
 
+// Definir Rotas da API
 app.use('/api/auth', authRoutes);
 app.use('/api/maps', mapsRoutes);
 app.use('/api/user', userRoutes);

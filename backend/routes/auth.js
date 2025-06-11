@@ -1,5 +1,5 @@
 // Arquivo: /routes/auth.js
-// Descrição: Garante que a verificação de e-mail do admin ('admail@gmail.com') seja feita de forma direta no registro.
+// Descrição: Garante que a verificação de e-mail do admin ('admail@gmail.com') seja feita de forma direta no registro. Adicionada lógica de correção de role no login para a conta de admin.
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -74,6 +74,12 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ msg: 'Credenciais inválidas' });
+        }
+
+        // Garante que a conta de admin sempre tenha a role correta.
+        if (email.toLowerCase() === 'admail@gmail.com' && user.role !== 'admin') {
+            user.role = 'admin';
+            await user.save();
         }
 
         const isMatch = await bcrypt.compare(password, user.password);

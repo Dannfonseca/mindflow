@@ -1,12 +1,12 @@
 // Arquivo: /js/auth.js
 // Descrição: Atualizado para enviar os novos campos do formulário de registro.
-const API_URL = 'https://mindflow-w7l2.onrender.com/api';
+const API_URL = 'http://localhost:5000/api';
 
 const loginForm = document.getElementById('login-form');
 const signupForm = document.getElementById('signup-form');
 
 if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {F
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
