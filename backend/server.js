@@ -1,5 +1,5 @@
 // Arquivo: server.js
-// Descrição: Adicionadas as novas rotas de admin e seus middlewares de proteção.
+// Descrição: Adicionadas as novas rotas de admin, seus middlewares de proteção e uma rota de health check.
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -33,6 +33,11 @@ app.use(express.json());
 
 // Rota de Teste
 app.get('/', (req, res) => res.send('API do MindFlow está rodando!'));
+
+// Rota de Health Check para CronJob
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok', timestamp: new Date() });
+});
 
 // Definir Rotas da API
 app.use('/api/auth', authRoutes);
