@@ -10,11 +10,14 @@
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
-  <body class="font-size-medium h-screen flex flex-col">
+  <body class="font-size-medium h-screen flex flex-col bg-gray-50">
     <header class="fixed top-0 left-0 right-0 z-40 glass-effect shadow-sm">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
             <div class="flex items-center">
-                <span class="material-icons text-3xl text-accent mr-3">bubble_chart</span>
+                <button id="menu-toggle-btn" class="p-2 rounded-md text-gray-700 md:hidden mr-2">
+                    <span class="material-icons">menu</span>
+                </button>
+                <span class="material-icons text-3xl text-accent mr-3 hidden sm:block">bubble_chart</span>
                 <h1 class="text-2xl font-semibold header-text">MindFlow</h1>
             </div>
             <div class="flex items-center">
@@ -41,8 +44,10 @@
         </div>
     </header>
 
+    <div id="sidebar-overlay" class="hidden"></div>
+
     <div class="flex flex-grow pt-16">
-        <aside class="w-64 p-4 space-y-4 glass-effect fixed top-16 left-0 h-[calc(100vh-64px)] overflow-y-auto border-r border-gray-200/80 z-30">
+        <aside class="w-64 p-4 space-y-4 glass-effect fixed top-16 left-0 h-[calc(100vh-64px)] overflow-y-auto border-r border-gray-200/80 z-50">
             <nav class="flex flex-col space-y-2">
                 <a href="#" class="sidebar-link active" data-target="view-dashboard">
                     <span class="material-icons sidebar-icon mr-3">dashboard</span>
@@ -50,7 +55,7 @@
                 </a>
                 <a href="#" class="sidebar-link" data-target="view-mindmap">
                     <span class="material-icons sidebar-icon mr-3">hub</span>
-                    Mapa Mental
+                    Novo Mapa
                 </a>
                 <a href="#" class="sidebar-link hidden" id="admin-link" data-target="view-admin-users">
                     <span class="material-icons sidebar-icon mr-3">admin_panel_settings</span>
@@ -59,11 +64,11 @@
             </nav>
         </aside>
 
-        <main class="flex-grow ml-64 p-8 flex flex-col">
+        <main class="flex-grow ml-64 p-4 sm:p-8 flex flex-col">
             <div class="main-view-area flex-grow">
                 
                 <div id="view-dashboard" class="app-view active">
-                    <div class="bg-white rounded-xl p-8 shadow-lg">
+                    <div class="bg-white rounded-xl p-6 sm:p-8 shadow-lg">
                         <h2 class="text-3xl font-semibold header-text mb-2">Seus Mapas Mentais</h2>
                         <p class="text-sm secondary-text mb-8">Revise e gerencie seus mapas.</p>
                         <div id="dashboard-maps-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -71,38 +76,52 @@
                     </div>
                 </div>
 
-                <div id="view-mindmap" class="app-view">
-                    <div class="p-4 border-b border-solid border-b-[#e9edf1] bg-white rounded-t-xl">
-                        <nav id="breadcrumb" aria-label="breadcrumb">
-                            <ol class="flex items-center text-xl font-bold header-text">
-                                <li>
-                                    <a href="#" id="breadcrumb-dashboard-link" class="font-semibold secondary-text hover:text-accent">Dashboard</a>
-                                </li>
-                                <li>
-                                    <span class="mx-2 text-gray-400">/</span>
-                                </li>
-                                <li id="breadcrumb-map-title" class="header-text cursor-pointer hover:bg-gray-100 rounded-md p-1" title="Clique para editar o título">
-                                    Novo Mapa Mental
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="flex justify-between items-center px-6 py-3 bg-gray-50">
-                        <button id="add-node-btn" class="p-2 text-[#101419] bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors" title="Adicionar novo card">
-                            <span class="material-icons">add</span>
-                        </button>
-                        <button id="save-map-btn" class="button-primary font-semibold py-2 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center text-sm">
-                            <span class="material-icons text-sm mr-2">save</span>
-                            Salvar Mapa
-                        </button>
-                    </div>
-                    <div id="mindmap-canvas" class="flex-grow rounded-b-xl bg-white shadow-lg">
-                        <svg id="svg-canvas"></svg>
+                <div id="view-mindmap" class="app-view hidden">
+                    <div class="flex flex-col h-full">
+                        <div class="p-4 border-b border-gray-200 bg-white rounded-t-xl shadow-sm">
+                            <nav id="breadcrumb" aria-label="breadcrumb">
+                                <ol class="flex items-center text-lg sm:text-xl font-bold header-text">
+                                    <li>
+                                        <a href="#" id="breadcrumb-dashboard-link" class="font-semibold secondary-text hover:text-accent">Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <span class="mx-2 text-gray-400">/</span>
+                                    </li>
+                                    <li id="breadcrumb-map-title" class="header-text cursor-pointer hover:bg-gray-100 rounded-md p-1" title="Clique para editar o título">
+                                        Novo Mapa Mental
+                                    </li>
+
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="flex-grow relative overflow-hidden bg-gray-100 rounded-b-xl shadow-inner" id="mindmap-container">
+                            <div id="mindmap-canvas" class="absolute"></div>
+                            <svg id="svg-canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></svg>
+                           
+                            <div class="absolute top-4 left-4 z-10 flex items-center gap-2">
+                                <button id="add-node-btn" class="bg-white p-2.5 rounded-lg shadow-md hover:bg-gray-200 transition-colors" title="Adicionar novo card">
+                                    <span class="material-icons text-gray-700">add</span>
+                                </button>
+                                <button id="save-map-btn" class="button-primary font-semibold py-2.5 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center text-sm">
+                                    <span class="material-icons text-sm mr-2">save</span>
+                                    Salvar Mapa
+                                </button>
+                            </div>
+                            <div class="absolute bottom-4 right-4 z-10 flex items-center gap-2 p-1 bg-white rounded-full shadow-md">
+                                <button id="zoom-out-btn" class="zoom-btn">
+                                    <span class="material-icons text-xl">remove</span>
+                                </button>
+                                <button id="zoom-reset-btn" class="px-3 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-full h-9">100%</button>
+                                <button id="zoom-in-btn" class="zoom-btn">
+                                    <span class="material-icons text-xl">add</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="view-settings" class="app-view">
-                     <div class="p-8 max-w-3xl mx-auto w-full bg-white rounded-xl shadow-lg">
+                <div id="view-settings" class="app-view hidden">
+                     <div class="p-6 sm:p-8 max-w-3xl mx-auto w-full bg-white rounded-xl shadow-lg">
                         <h1 class="text-3xl font-bold header-text mb-10">Configurações</h1>
                         
                         <div class="settings-section">
@@ -149,13 +168,13 @@
                     </div>
                 </div>
 
-                <div id="view-admin-users" class="app-view">
-                    <div class="p-8 w-full bg-white rounded-xl shadow-lg">
-                        <div class="flex justify-between items-center mb-6">
+                <div id="view-admin-users" class="app-view hidden">
+                    <div class="p-6 sm:p-8 w-full bg-white rounded-xl shadow-lg">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                             <h1 class="text-3xl font-bold header-text">Gerenciamento de Usuários</h1>
-                            <div class="flex items-center gap-4">
-                                <input type="text" id="admin-user-search" placeholder="Pesquisar usuários..." class="form-input-settings w-80">
-                                <button id="admin-create-user-btn" class="button-primary font-semibold py-2.5 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center text-sm whitespace-nowrap">
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
+                                <input type="text" id="admin-user-search" placeholder="Pesquisar usuários..." class="form-input-settings w-full sm:w-80">
+                                <button id="admin-create-user-btn" class="button-primary font-semibold py-2.5 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center text-sm whitespace-nowrap">
                                     <span class="material-icons text-sm mr-2">person_add</span>
                                     Criar Usuário
                                 </button>
