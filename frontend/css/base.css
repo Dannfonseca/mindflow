@@ -1,0 +1,15 @@
+/* Estilos Gerais e Tipografia */
+html, body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #F3F4F6;
+    color: #1F2937;
+    transition: background-color 0.3s, color 0.3s;
+}
+.font-size-medium { font-size: 16px; }
+.font-size-large { font-size: 18px; }
+
+.header-text { color: #111827; }
+.main-content-text { color: #374151; }
+.secondary-text { color: #6B7280; }
+.text-accent { color: #007AFF; }
+.border-accent { border-color: #007AFF; }

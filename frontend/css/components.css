@@ -1,0 +1,237 @@
+/*
+  Arquivo: /css/components.css
+  Descrição: Adicionados estilos e animações para o novo sistema de notificações (toasts).
+*/
+/* Animações de Notificação */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+/* Notificações (Toasts) */
+.notification {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    animation: slideInRight 0.3s ease-out forwards;
+}
+.notification.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+.notification__icon {
+    flex-shrink: 0;
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+}
+.notification__content {
+    flex-grow: 1;
+}
+.notification__message {
+    font-weight: 500;
+    line-height: 1.4;
+}
+.notification__close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 1rem;
+    padding: 0.25rem;
+    opacity: 0.7;
+}
+.notification__close:hover {
+    opacity: 1;
+}
+.notification--success {
+    background-color: #ecfdf5;
+    color: #064e3b;
+}
+.notification--success .notification__close {
+    color: #065f46;
+}
+.notification--error {
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+.notification--error .notification__close {
+    color: #b91c1c;
+}
+
+
+/* Dropdown do Perfil */
+.user-menu-container {
+    position: relative;
+}
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    width: 220px;
+    z-index: 50;
+    border: 1px solid #f3f4f6;
+    overflow: hidden;
+}
+.profile-dropdown.show {
+    display: block;
+}
+.dropdown-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    color: #374151;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.dropdown-link:hover {
+    background-color: #f9fafb;
+    color: #007AFF;
+}
+.dropdown-link:hover .sidebar-icon {
+    color: #007AFF;
+}
+
+
+/* Botões */
+.zoom-btn {
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.zoom-btn:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    color: #007AFF;
+}
+#zoom-reset-btn {
+    border-radius: 16px;
+}
+.font-size-btn { padding: 0.5rem 1rem; border: 1px solid #d1d5db; border-radius: 6px; background-color: white; cursor: pointer; }
+.font-size-btn.active { background-color: #007AFF; color: white; border-color: #007AFF; }
+.button-primary { background-color: #007AFF; color: white; }
+.button-primary:hover { background-color: #005ECC; }
+
+
+/* Menu de Contexto e Barra de Formatação */
+.context-menu {
+    display: none; position: absolute; z-index: 1000; width: 220px; background-color: white;
+    border-radius: 8px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #f3f4f6;
+}
+.context-menu.show { display: block; }
+.context-menu-btn { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.65rem 0.75rem; text-align: left; background: none; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem; color: #374151; }
+.context-menu-btn .material-icons { font-size: 20px; color: #6b7280; }
+.context-menu-btn:hover { background-color: #f9fafb; }
+.format-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+}
+.format-btn:hover {
+    background-color: #f3f4f6;
+}
+.format-btn.active {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+
+/* Forms e Controles */
+.toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 28px; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: #007AFF; }
+input:checked + .slider:before { transform: translateX(22px); }
+.font-size-options { display: flex; gap: 0.5rem; }
+
+.form-label { color: #374151; font-weight: 500; margin-bottom: 0.5rem; }
+.form-input-settings { width: 100%; border: 1px solid #d1d5db; background-color: #f9fafb; border-radius: 8px; padding: 0.75rem 1rem; color: #1f2937; transition: all 0.2s; }
+.form-input-settings:focus { outline: none; border-color: #007AFF; box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2); }
+
+/* Modals */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 100; }
+.modal-overlay.hidden { display: none; }
+.modal-content { background-color: white; padding: 2rem; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+.modal-button-primary { border: none; background-color: #007AFF; color: white; padding: 0.65rem 1.5rem; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+.modal-button-primary:hover { background-color: #005ECC; }
+.modal-button-secondary { border: none; background-color: #e5e7eb; color: #374151; padding: 0.65rem 1.5rem; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+.modal-button-secondary:hover { background-color: #d1d5db; }
+.modal-button-primary:disabled { background-color: #a3c9f5; cursor: not-allowed; }
+
+/* Link Modal Specifics */
+.link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9fafb;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #f3f4f6;
+}
+.link-item a {
+    color: #007AFF;
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.link-item a:hover {
+    text-decoration: underline;
+}
+.remove-link-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.25rem;
+    margin-left: 0.5rem;
+}
+.remove-link-btn:hover {
+    color: #ef4444;
+}
+
+
+/* Badges e Botões de Ação (Admin) */
+.role-badge { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
+.role-user { background-color: #dbeafe; color: #1e40af; }
+.role-premium { background-color: #dcfce7; color: #166534; }
+.role-subadmin { background-color: #fef3c7; color: #92400e; }
+.role-admin { background-color: #fee2e2; color: #991b1b; }
+.action-btn { font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 6px; transition: background-color 0.2s; }
+.action-btn.edit-btn { color: #2563eb; }
+.action-btn.edit-btn:hover { background-color: #dbeafe; }
+.action-btn.delete-btn { color: #dc2626; }
+.action-btn.delete-btn:hover { background-color: #fee2e2; }

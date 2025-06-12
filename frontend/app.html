@@ -7,7 +7,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/views.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body class="font-size-medium h-screen flex flex-col bg-gray-50">
@@ -45,25 +50,24 @@
     </header>
 
     <div id="sidebar-overlay" class="hidden"></div>
+    <aside id="app-sidebar" class="w-64 p-4 space-y-4 glass-effect fixed top-16 left-0 h-[calc(100vh-64px)] overflow-y-auto border-r border-gray-200/80">
+        <nav class="flex flex-col space-y-2">
+            <a href="#" class="sidebar-link active" data-target="view-dashboard">
+                <span class="material-icons sidebar-icon mr-3">dashboard</span>
+                Dashboard
+            </a>
+            <a href="#" class="sidebar-link" data-target="view-mindmap">
+                <span class="material-icons sidebar-icon mr-3">hub</span>
+                Novo Mapa
+            </a>
+            <a href="#" class="sidebar-link hidden" id="admin-link" data-target="view-admin-users">
+                <span class="material-icons sidebar-icon mr-3">admin_panel_settings</span>
+                Administração
+            </a>
+        </nav>
+    </aside>
 
-    <div class="flex flex-grow pt-16">
-        <aside class="w-64 p-4 space-y-4 glass-effect fixed top-16 left-0 h-[calc(100vh-64px)] overflow-y-auto border-r border-gray-200/80 z-50">
-            <nav class="flex flex-col space-y-2">
-                <a href="#" class="sidebar-link active" data-target="view-dashboard">
-                    <span class="material-icons sidebar-icon mr-3">dashboard</span>
-                    Dashboard
-                </a>
-                <a href="#" class="sidebar-link" data-target="view-mindmap">
-                    <span class="material-icons sidebar-icon mr-3">hub</span>
-                    Novo Mapa
-                </a>
-                <a href="#" class="sidebar-link hidden" id="admin-link" data-target="view-admin-users">
-                    <span class="material-icons sidebar-icon mr-3">admin_panel_settings</span>
-                    Administração
-                </a>
-            </nav>
-        </aside>
-
+    <div id="main-container" class="flex flex-grow pt-16">
         <main class="flex-grow ml-64 p-4 sm:p-8 flex flex-col">
             <div class="main-view-area flex-grow">
                 
@@ -95,9 +99,9 @@
                             </nav>
                         </div>
                         <div class="flex-grow relative overflow-hidden bg-gray-100 rounded-b-xl shadow-inner" id="mindmap-container">
-                            <div id="mindmap-canvas" class="absolute"></div>
-                            <svg id="svg-canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></svg>
-                           
+                            <div id="mindmap-canvas" class="absolute">
+                                <svg id="svg-canvas"></svg>
+                            </div>
                             <div class="absolute top-4 left-4 z-10 flex items-center gap-2">
                                 <button id="add-node-btn" class="bg-white p-2.5 rounded-lg shadow-md hover:bg-gray-200 transition-colors" title="Adicionar novo card">
                                     <span class="material-icons text-gray-700">add</span>
@@ -201,7 +205,12 @@
         </main>
     </div>
     
+    <div id="notification-container" class="fixed top-20 right-6 z-[2000] space-y-3 w-80"></div>
+
     <div id="topic-context-menu" class="context-menu">
+        <button data-action="links" class="context-menu-btn">
+            <span class="material-icons">link</span> Gerenciar Links
+        </button>
         <button data-action="audio" class="context-menu-btn">
             <span class="material-icons">mic</span> Gravar Áudio
         </button>
@@ -213,6 +222,12 @@
         </button>
         <button data-action="quiz" class="context-menu-btn">
             <span class="material-icons">quiz</span> Trilha de Questões
+        </button>
+    </div>
+
+    <div id="format-toolbar" class="hidden absolute z-50 bg-white shadow-lg rounded-lg p-1 flex gap-1">
+        <button class="format-btn" data-command="bold">
+            <span class="material-icons">format_bold</span>
         </button>
     </div>
 
@@ -300,7 +315,32 @@
             </form>
         </div>
     </div>
+    
+    <div id="link-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-2">Links do Tópico</h2>
+            <p id="link-modal-topic-text" class="secondary-text mb-4 truncate"></p>
+            <div id="link-list" class="space-y-2 mb-4 pr-2 max-h-48 overflow-y-auto"></div>
+            <form id="link-form" class="space-y-3">
+                <p id="link-counter" class="text-sm secondary-text text-right"></p>
+                <div id="add-link-section">
+                    <label class="flex flex-col">
+                        <span class="form-label">Título do Link</span>
+                        <input id="link-title" type="text" placeholder="Ex: Artigo sobre IA" class="form-input-settings" />
+                    </label>
+                    <label class="flex flex-col mt-3">
+                        <span class="form-label">URL</span>
+                        <input id="link-url" type="url" placeholder="https://..." class="form-input-settings" />
+                    </label>
+                </div>
+            </form>
+             <div class="flex justify-end gap-4 pt-4">
+                <button type="button" id="link-modal-close-btn" class="modal-button-secondary">Cancelar</button>
+                <button type="button" id="link-modal-add-btn" class="modal-button-primary">Adicionar Link</button>
+            </div>
+        </div>
+    </div>
 
-    <script src="js/app.js" defer></script>
+    <script src="js/app.js" type="module"></script>
   </body>
 </html>

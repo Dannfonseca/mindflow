@@ -1,3 +1,5 @@
+// Arquivo: /routes/maps.js
+// Descrição: Rota de salvar/atualizar adaptada para o novo schema de 'nodes' com mais detalhes.
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
 import Map from '../models/Map.js';
@@ -19,7 +21,7 @@ router.post('/', authMiddleware, async (req, res) => {
             map = await Map.findOneAndUpdate(
                 { _id: id, user: userId },
                 { $set: mapFields },
-                { new: true }
+                { new: true, runValidators: true }
             );
             if (!map) return res.status(404).json({ msg: 'Mapa não encontrado ou permissão negada' });
         } else {

@@ -1,0 +1,97 @@
+/*
+  Arquivo: /css/theme.css
+  Descrição: Adicionados estilos de modo escuro para o novo sistema de notificações.
+*/
+/* --- TEMA ESCURO --- */
+body.dark-mode { background-color: #111827; color: #d1d5db; }
+.dark-mode .bg-white { background-color: #1F2937; }
+.dark-mode .bg-gray-50 { background-color: #111827; }
+.dark-mode .glass-effect { background: rgba(29, 39, 56, 0.8); border-color: rgba(55, 65, 81, 0.5); }
+.dark-mode .header-text { color: #f9fafb; }
+.dark-mode .main-content-text { color: #d1d5db; }
+.dark-mode .secondary-text { color: #9ca3af; }
+.dark-mode .border-gray-200, .dark-mode .border-gray-200\/80, .dark-mode .border-b, .dark-mode .border-r { border-color: #374151; }
+.dark-mode .sidebar-link { color: #d1d5db; }
+.dark-mode .sidebar-link:hover { background: rgba(55, 65, 81, 0.5); }
+.dark-mode .sidebar-link.active { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.dark-mode .sidebar-icon { color: #9ca3af; }
+.dark-mode .sidebar-link.active .sidebar-icon { color: #3b82f6; }
+.dark-mode .profile-dropdown { background-color: #1F2937; border-color: #374151; }
+.dark-mode .dropdown-link { color: #d1d5db; }
+.dark-mode .dropdown-link:hover { background-color: #374151; color: #3b82f6; }
+.dark-mode .dropdown-link:hover .sidebar-icon { color: #3b82f6; }
+.dark-mode .form-input-settings { background-color: #374151; border-color: #4b5563; color: #d1d5db; }
+.dark-mode .form-input-settings:focus { border-color: #007AFF; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); }
+.dark-mode .card-hover:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); }
+.dark-mode .border-dashed.border-gray-300 { border-color: #4b5563; }
+.dark-mode .text-gray-400 { color: #6b7280; }
+.dark-mode #mindmap-container { background-color: #1f2937; }
+.dark-mode #mindmap-canvas { background-color: #111827; }
+.dark-mode .mindmap-node { background-color: #1f2937; border-color: #374151; }
+.dark-mode .topic-list { color: #d1d5db; }
+.dark-mode .topic-item { border-bottom-color: #4b5563; }
+.dark-mode .topic-input { background-color: #374151; color: #d1d5db; }
+.dark-mode .topic-input:focus { background-color: #4b5563; }
+.dark-mode .node-controls { border-top-color: #374151; }
+.dark-mode .node-control-btn { background-color: #374151; color: #d1d5db; }
+.dark-mode .node-control-btn:hover { background-color: #4b5563; }
+.dark-mode .node-control-btn.active { background-color: #3b82f6; color: white; }
+.dark-mode .context-menu { background-color: #1f2937; border-color: #374151; }
+.dark-mode .context-menu-btn { color: #d1d5db; }
+.dark-mode .context-menu-btn:hover { background-color: #374151; }
+.dark-mode .context-menu-btn .material-icons { color: #9ca3af; }
+.dark-mode #format-toolbar { background-color: #374151; }
+.dark-mode .format-btn { color: #d1d5db; }
+.dark-mode .format-btn:hover { background-color: #4b5563; }
+.dark-mode .format-btn.active { background-color: #1e40af; color: #60a5fa; }
+.dark-mode .modal-content { background-color: #1f2937; }
+.dark-mode .modal-button-secondary { background-color: #374151; color: #d1d5db; }
+.dark-mode .modal-button-secondary:hover { background-color: #4b5563; }
+.dark-mode .modal-button-primary:disabled { background-color: #1e3a8a; color: #9ca3af; }
+.dark-mode .role-user { background-color: #1e3a8a; color: #bfdbfe; }
+.dark-mode .role-premium { background-color: #14532d; color: #bbf7d0; }
+.dark-mode .role-subadmin { background-color: #78350f; color: #fde68a; }
+.dark-mode .role-admin { background-color: #991b1b; color: #fecaca; }
+.dark-mode .action-btn.edit-btn { color: #60a5fa; }
+.dark-mode .action-btn.edit-btn:hover { background-color: #1e40af; }
+.dark-mode .action-btn.delete-btn { color: #f87171; }
+.dark-mode .action-btn.delete-btn:hover { background-color: #991b1b; }
+.dark-mode .hover\:bg-gray-50:hover { background-color: #374151; }
+.dark-mode .divide-y.divide-gray-200 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+.dark-mode .font-size-btn { background-color: #1f2937; border-color: #374151; color: #d1d5db; }
+.dark-mode .font-size-btn.active { background-color: #007AFF; color: white; border-color: #007AFF; }
+.dark-mode .zoom-btn { background-color: #374151; color: #d1d5db; border-color: #4b5563; }
+.dark-mode .zoom-btn:hover { background-color: #4b5563; color: white; }
+.dark-mode #view-admin-users th {
+    color: #9ca3af;
+}
+.dark-mode #view-admin-users td {
+    color: #d1d5db;
+}
+.dark-mode .link-item {
+    background-color: #374151;
+    border-color: #4b5563;
+}
+.dark-mode .link-item a {
+    color: #60a5fa;
+}
+.dark-mode .remove-link-btn {
+    color: #6b7280;
+}
+.dark-mode .remove-link-btn:hover {
+    color: #f87171;
+}
+.dark-mode .notification--success {
+    background-color: #14532d;
+    color: #dcfce7;
+}
+.dark-mode .notification--success .notification__close {
+    color: #bbf7d0;
+}
+.dark-mode .notification--error {
+    background-color: #450a0a;
+    color: #fecaca;
+}
+.dark-mode .notification--error .notification__close {
+    color: #fca5a5;
+}
